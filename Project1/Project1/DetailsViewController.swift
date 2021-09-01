@@ -9,7 +9,10 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 	
+	var imageIndex: Int?
+	var imageCount: Int?
 	var selectedImage: String?
+
 	@IBOutlet var imageView: UIImageView!
 
     override func viewDidLoad() {
@@ -19,7 +22,11 @@ class DetailsViewController: UIViewController {
 			imageView.image = UIImage(named: selectedImage)
 		}
 		
-		title = NSLocalizedString("View Picture", comment: "")
+		if let imageIndex = imageIndex, let imageCount = imageCount {
+			title = String(format: NSLocalizedString("Image %d/%d", comment: ""), imageIndex + 1, imageCount)
+		} else {
+			title = NSLocalizedString("View Picture", comment: "")
+		}
 		navigationItem.largeTitleDisplayMode = .never
     }
 	
