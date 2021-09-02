@@ -26,6 +26,7 @@ class ViewController: UITableViewController {
 		
 		title = NSLocalizedString("Storm Viewer", comment: "")
 		navigationController?.navigationBar.prefersLargeTitles = true
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,7 +47,11 @@ class ViewController: UITableViewController {
 			navigationController?.pushViewController(viewController, animated: true)
 		}
 	}
-
-
+	
+	@objc private func shareTapped() {
+		let viewController = UIActivityViewController(activityItems: [Bundle.main.object(forInfoDictionaryKey: "CFBundleName")!, URL(string: "https://www.hackingwithswift.com/100")!], applicationActivities: [])
+		viewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+		present(viewController, animated: true)
+	}
 }
 

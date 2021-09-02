@@ -29,7 +29,7 @@ class ViewController: UIViewController {
 		}
 		
 		countries = ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
-		
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(showScoreTapped))
 		
 		newGame()
 	}
@@ -55,6 +55,12 @@ class ViewController: UIViewController {
 	private func gameOver() {
 		let alert = UIAlertController(title: "Game Over", message: "Your final score is \(score)", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: newGame))
+		present(alert, animated: true)
+	}
+	
+	@objc private func showScoreTapped() {
+		let alert = UIAlertController(title: "Your score", message: "\(score)/\(totalQuestionCount)", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in }))
 		present(alert, animated: true)
 	}
 
