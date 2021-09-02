@@ -13,9 +13,12 @@ class ViewController: UIViewController {
 	@IBOutlet weak var button2: UIButton!
 	@IBOutlet weak var button3: UIButton!
 	
-	var countries = [String]()
-	var score = 0
-	var correctAnswer = 0
+	let totalQuestionCount = 10
+
+	private var countries = [String]()
+	private var score = 0
+	private var correctAnswer = 0
+	private var currentQuestionIndex = 0
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -28,6 +31,13 @@ class ViewController: UIViewController {
 		countries = ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
 		
 		
+		newGame()
+	}
+	
+	private func newGame(action: UIAlertAction! = nil) {
+		currentQuestionIndex = 0
+		score = 0
+
 		askQuestion()
 	}
 	
@@ -39,22 +49,38 @@ class ViewController: UIViewController {
 		button3.setImage(UIImage(named: countries[2]), for: .normal)
 		
 		correctAnswer = Int.random(in: 0...2)
-		title = countries[correctAnswer].uppercased()
+		title = "Guess: \(countries[correctAnswer].uppercased()) | Score: \(score)"
 	}
-
-	@IBAction func buttonTapped(_ sender: UIButton) {
-		var title = "Correct"
-		if sender.tag == correctAnswer {
-			score += 1
-		} else {
-			title = "Wrong"
-			score -= 1
-		}
-		
-		let alert = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+	
+	private func gameOver() {
+		let alert = UIAlertController(title: "Game Over", message: "Your final score is \(score)", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: newGame))
 		present(alert, animated: true)
 	}
 
+	@IBAction func buttonTapped(_ sender: UIButton) {
+		currentQuestionIndex += 1
+		
+		if sender.tag == correctAnswer {
+			score += 1
+			
+			if currentQuestionIndex >= totalQuestionCount {
+				gameOver()
+			} else {
+				askQuestion()
+			}
+		} else {
+			let alert = UIAlertController(title: "Wrong", message: "That's \(countries[sender.tag].capitalized)", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "Continue", style: .default) { [self] a in
+				if currentQuestionIndex >= totalQuestionCount {
+					gameOver()
+				} else {
+					askQuestion(action: a)
+				}
+			})
+			present(alert, animated: true)
+			score -= 1
+		}
+	}
 }
 
