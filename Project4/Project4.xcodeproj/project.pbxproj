@@ -13,6 +13,7 @@
 		5D4AEB9426E12613002B56F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D4AEB9226E12613002B56F0 /* Main.storyboard */; };
 		5D4AEB9626E12616002B56F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D4AEB9526E12616002B56F0 /* Assets.xcassets */; };
 		5D4AEB9926E12616002B56F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D4AEB9726E12616002B56F0 /* LaunchScreen.storyboard */; };
+		5D4AEBA126E1F86D002B56F0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AEBA026E1F86D002B56F0 /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		5D4AEB9526E12616002B56F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D4AEB9826E12616002B56F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D4AEB9A26E12616002B56F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D4AEBA026E1F86D002B56F0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				5D4AEB9526E12616002B56F0 /* Assets.xcassets */,
 				5D4AEB9726E12616002B56F0 /* LaunchScreen.storyboard */,
 				5D4AEB9A26E12616002B56F0 /* Info.plist */,
+				5D4AEBA026E1F86D002B56F0 /* HomeViewController.swift */,
 			);
 			path = Project4;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 				5D4AEB9126E12613002B56F0 /* ViewController.swift in Sources */,
 				5D4AEB8D26E12613002B56F0 /* AppDelegate.swift in Sources */,
 				5D4AEB8F26E12613002B56F0 /* SceneDelegate.swift in Sources */,
+				5D4AEBA126E1F86D002B56F0 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
