@@ -8,14 +8,16 @@
 import UIKit
 
 class ViewController: UITableViewController {
-
+	
+	let minWordLength = 3
 	var allWords = [String]()
 	var usedWords = [String]()
-
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
+		navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(startGame))
 		
 		if let url = Bundle.main.url(forResource: "start", withExtension: "txt") {
 			if let words = try? String(contentsOf: url) {
@@ -52,7 +54,7 @@ class ViewController: UITableViewController {
 		present(alert, animated: true)
 	}
 	
-	private func startGame() {
+	@objc private func startGame() {
 		title = allWords.randomElement()
 		usedWords.removeAll(keepingCapacity: true)
 		tableView.reloadData()
@@ -60,29 +62,33 @@ class ViewController: UITableViewController {
 	
 	private func submit(_ answer: String) {
 		let answer = answer.lowercased()
-		let errorTitle: String
-		let errorMessage: String
+		
+		if !isLongEnough(word: answer) {
+			showError(title: "Too short", message: "Words should be at least \(minWordLength) characters long")
+			return
+		}
 
-		if isPossible(word: answer) {
-			if isOriginal(word: answer) {
-				if isReal(word: answer) {
-					usedWords.insert(answer, at: 0)
-					tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-					return
-				} else {
-					errorTitle = "Not a word"
-					errorMessage = "\(answer) doesn't seem to be a word"
-				}
-			} else {
-				errorTitle = "Already used"
-				errorMessage = "\(answer) is alredy in the list"
-			}
-		} else {
-			errorTitle = "Impossible"
-			errorMessage = "\(answer) can't be made of \(title ?? "") letters"
+		if !isPossible(word: answer) {
+			showError(title: "Not a word", message: "\(answer) doesn't seem to be a word")
+			return
+		}
+
+		if !isOriginal(word: answer) {
+			showError(title: "Already used", message: "\(answer) is alredy in the list")
+			return
+		}
+
+		if !isReal(word: answer) {
+			showError(title: "Impossible", message: "\(answer) can't be made of \(title ?? "") letters")
+			return
 		}
 		
-		let alert = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+		usedWords.insert(answer, at: 0)
+		tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+	}
+	
+	private func showError(title: String, message: String) {
+		let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
 		present(alert, animated: true)
 	}
@@ -104,7 +110,11 @@ class ViewController: UITableViewController {
 	}
 	
 	private func isOriginal(word: String) -> Bool {
-		return !usedWords.contains(word)
+		guard let title = title?.lowercased() else {
+			return false
+		}
+		
+		return title != word && !usedWords.contains(word)
 	}
 	
 	private func isReal(word: String) -> Bool {
@@ -113,6 +123,10 @@ class ViewController: UITableViewController {
 		let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
 		
 		return misspelledRange.location == NSNotFound
+	}
+	
+	private func isLongEnough(word: String) -> Bool {
+		return word.count >= minWordLength
 	}
 }
 
