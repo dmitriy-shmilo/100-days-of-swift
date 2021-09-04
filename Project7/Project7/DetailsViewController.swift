@@ -32,7 +32,11 @@ class DetailsViewController: UIViewController {
 		<style> body { font-size: 150%; } </style>
 		</head>
 		<body>
+		<h1>\(item.title)</h1>
+		<h4>signed \(item.signatureCount) times</h4>
+		<p>
 		\(item.body)
+		</p>
 		</body>
 		</html>
 		"""

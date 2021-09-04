@@ -46,7 +46,20 @@
                             <outlet property="delegate" destination="hSg-4M-pDD" id="ow1-Yj-02m"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="IRD-oR-s6Z"/>
+                    <navigationItem key="navigationItem" id="IRD-oR-s6Z">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="search" id="UNM-qd-YAC">
+                                <connections>
+                                    <action selector="showFilter" destination="hSg-4M-pDD" id="p1E-A2-JZu"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="bookmarks" id="7UD-hf-nzZ">
+                                <connections>
+                                    <action selector="showCredits" destination="hSg-4M-pDD" id="gM7-3G-om8"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dB3-5l-CwM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
