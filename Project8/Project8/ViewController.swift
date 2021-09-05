@@ -74,6 +74,8 @@ class ViewController: UIViewController {
 		
 		let buttonsView = UIView()
 		buttonsView.translatesAutoresizingMaskIntoConstraints = false
+		buttonsView.layer.borderWidth = 1.0
+		buttonsView.layer.borderColor = UIColor.lightGray.cgColor
 		view.addSubview(buttonsView)
 		
 		NSLayoutConstraint.activate([
@@ -157,11 +159,17 @@ class ViewController: UIViewController {
 			currentAnswer.text = ""
 			score += 1
 			
-			if score % 7 == 0 {
+			if letterButtons.allSatisfy({ $0.isHidden }) {
 				let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
 				ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
 				present(ac, animated: true)
 			}
+		} else {
+			let alert = UIAlertController(title: "Wrong", message: "There's no such word in the list.", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+			present(alert, animated: true)
+			
+			score -= 1
 		}
 	}
 	
@@ -194,7 +202,7 @@ class ViewController: UIViewController {
 		
 		if let levelFileUrl = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
 			if let levelContents = try? String(contentsOf: levelFileUrl) {
-				var lines = levelContents.components(separatedBy: "\n")
+				var lines = levelContents.components(separatedBy: "\n").filter { $0.count > 2}
 				lines.shuffle()
 				
 				for (index, line) in lines.enumerated() {
