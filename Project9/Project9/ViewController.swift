@@ -61,10 +61,15 @@ class ViewController: UITableViewController {
 				return
 			}
 			
-			filteredPetitions = petitions.filter {
-				text.count == 0 || $0.title.lowercased().contains(text) || $0.body.lowercased().contains(text)
+			DispatchQueue.global(qos: .userInitiated).async {
+				filteredPetitions = petitions.filter {
+					text.count == 0 || $0.title.lowercased().contains(text) || $0.body.lowercased().contains(text)
+				}
+				
+				DispatchQueue.main.async {
+					tableView.reloadData()
+				}
 			}
-			tableView.reloadData()
 		}))
 		present(alert, animated: true)
 	}

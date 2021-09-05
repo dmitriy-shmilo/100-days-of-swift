@@ -8,25 +8,32 @@
 import UIKit
 
 class ViewController: UITableViewController {
-
+	
 	var pictures = [String]()
-
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let fm = FileManager.default
-		let path = Bundle.main.resourcePath!
-		let items = try! fm.contentsOfDirectory(atPath: path)
-		
-		for item in items.sorted() {
-			if item.hasPrefix("nssl") {
-				pictures.append(item)
+		DispatchQueue.global(qos: .userInitiated).async { [self] in
+			
+			
+			let fm = FileManager.default
+			let path = Bundle.main.resourcePath!
+			let items = try! fm.contentsOfDirectory(atPath: path)
+			
+			for item in items.sorted() {
+				if item.hasPrefix("nssl") {
+					pictures.append(item)
+				}
+			}
+			
+			DispatchQueue.main.async {
+				tableView.reloadData()
 			}
 		}
 		
 		title = NSLocalizedString("Storm Viewer", comment: "")
 		navigationController?.navigationBar.prefersLargeTitles = true
-		navigationItem.
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,7 +54,7 @@ class ViewController: UITableViewController {
 			navigationController?.pushViewController(viewController, animated: true)
 		}
 	}
-
-
+	
+	
 }
 
