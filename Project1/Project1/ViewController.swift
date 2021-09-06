@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class ViewController: UICollectionViewController {
 	
 	var pictures = [String]()
 	
@@ -28,7 +28,7 @@ class ViewController: UITableViewController {
 			}
 			
 			DispatchQueue.main.async {
-				tableView.reloadData()
+				collectionView.reloadData()
 			}
 		}
 		
@@ -36,21 +36,25 @@ class ViewController: UITableViewController {
 		navigationController?.navigationBar.prefersLargeTitles = true
 	}
 	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		pictures.count
 	}
 	
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
-		cell.textLabel?.text = pictures[indexPath.row]
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Picture", for: indexPath) as? PictureCollectionViewCell else {
+			fatalError()
+		}
+		cell.label.text = pictures[indexPath.item]
+		cell.imageView.image = UIImage(named: pictures[indexPath.item])
 		return cell
 	}
 	
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+	
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let viewController = storyboard?.instantiateViewController(identifier: "Details") as? DetailsViewController {
 			viewController.imageCount = pictures.count
 			viewController.imageIndex = indexPath.row
-			viewController.selectedImage = pictures[indexPath.row]
+			viewController.selectedImage = pictures[indexPath.item]
 			navigationController?.pushViewController(viewController, animated: true)
 		}
 	}

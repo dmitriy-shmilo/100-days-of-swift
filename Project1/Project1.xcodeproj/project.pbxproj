@@ -24,6 +24,7 @@
 		5D4AEB3826DF983D002B56F0 /* nssl0049.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D4AEB2E26DF983D002B56F0 /* nssl0049.jpg */; };
 		5D4AEB3926DF983D002B56F0 /* nssl0091.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5D4AEB2F26DF983D002B56F0 /* nssl0091.jpg */; };
 		5D4AEB3D26DF9DF5002B56F0 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AEB3C26DF9DF5002B56F0 /* DetailsViewController.swift */; };
+		5D82C57126E6A9EE00876C59 /* PictureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D82C57026E6A9EE00876C59 /* PictureCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		5D4AEB2E26DF983D002B56F0 /* nssl0049.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nssl0049.jpg; sourceTree = "<group>"; };
 		5D4AEB2F26DF983D002B56F0 /* nssl0091.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nssl0091.jpg; sourceTree = "<group>"; };
 		5D4AEB3C26DF9DF5002B56F0 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		5D82C57026E6A9EE00876C59 /* PictureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				5D4AEB1D26DF96D5002B56F0 /* LaunchScreen.storyboard */,
 				5D4AEB2026DF96D5002B56F0 /* Info.plist */,
 				5D4AEB3C26DF9DF5002B56F0 /* DetailsViewController.swift */,
+				5D82C57026E6A9EE00876C59 /* PictureCollectionViewCell.swift */,
 			);
 			path = Project1;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			files = (
 				5D4AEB1726DF96D2002B56F0 /* ViewController.swift in Sources */,
 				5D4AEB1326DF96D2002B56F0 /* AppDelegate.swift in Sources */,
+				5D82C57126E6A9EE00876C59 /* PictureCollectionViewCell.swift in Sources */,
 				5D4AEB1526DF96D2002B56F0 /* SceneDelegate.swift in Sources */,
 				5D4AEB3D26DF9DF5002B56F0 /* DetailsViewController.swift in Sources */,
 			);

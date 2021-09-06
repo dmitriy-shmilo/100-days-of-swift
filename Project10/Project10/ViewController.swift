@@ -40,10 +40,10 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
 	
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let person = people[indexPath.item]
-		let alert = UIAlertController(title: "Rename", message: nil, preferredStyle: .alert)
+		let alert = UIAlertController(title: "Modify", message: nil, preferredStyle: .alert)
 		alert.addTextField()
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] _ in
+		alert.addAction(UIAlertAction(title: "Rename", style: .default, handler: { [weak alert] _ in
 			guard let text = alert?.textFields?[0].text else {
 				return
 			}
@@ -51,7 +51,12 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
 			person.name = text
 			collectionView.reloadItems(at: [indexPath])
 		}))
+		alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+			self?.people.remove(at: indexPath.item)
+			collectionView.deleteItems(at: [indexPath])
+		}))
 		
+		alert.textFields?[0].text = person.name
 		present(alert, animated: true)
 	}
 	
@@ -76,6 +81,11 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
 	
 	@objc private func addPerson() {
 		let picker = UIImagePickerController()
+		if UIImagePickerController.isSourceTypeAvailable(.camera) {
+			picker.sourceType = .camera
+		} else {
+			picker.sourceType = .photoLibrary
+		}
 		picker.allowsEditing = true
 		picker.delegate = self
 		present(picker, animated: true)
