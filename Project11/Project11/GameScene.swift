@@ -10,12 +10,22 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 	
+	static let initialBallCount = 5
+	static let allowedTopInset:CGFloat = 150
+
 	var scoreLabel: SKLabelNode!
 	var editingLabel: SKLabelNode!
+	var ballCountLabel: SKLabelNode!
 	
+	var ballCount: Int = initialBallCount {
+		didSet {
+			ballCountLabel.text = "\(ballCount) balls left"
+		}
+	}
 	var isEditing = false {
 		didSet {
 			editingLabel.text = isEditing ? "Done" : "Editing"
+			ballCount = Self.initialBallCount
 		}
 	}
 	var score = 0 {
@@ -52,6 +62,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		scoreLabel.position = CGPoint(x: 980, y: 700)
 		addChild(scoreLabel)
 		
+		ballCountLabel = SKLabelNode(fontNamed: "Chalkduster")
+		ballCountLabel.text = "\(ballCount) balls left"
+		ballCountLabel.horizontalAlignmentMode = .right
+		ballCountLabel.position = CGPoint(x: 980, y: 650)
+		addChild(ballCountLabel)
+		
 		physicsWorld.contactDelegate = self
 		physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
 		addChild(background)
@@ -68,29 +84,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			}
 			
 			if isEditing {
-				let size = CGSize(width: CGFloat.random(in: 16...128), height: 16)
-				let box = SKSpriteNode(
-					color: UIColor(
-						red: CGFloat.random(in: 0...1),
-						green: CGFloat.random(in: 0...1),
-						blue: CGFloat.random(in: 0...1),
-						alpha: 1.0
-					), size: size)
-				box.zRotation = CGFloat.random(in: 0...CGFloat.pi)
-				box.position = location
-				box.physicsBody = SKPhysicsBody(rectangleOf: size)
-				box.physicsBody?.isDynamic = false
-				addChild(box)
+				makeBox(at: location)
 				return
 			}
-
-			let ball = SKSpriteNode(imageNamed: "ballBlue.png")
-			ball.position = location
-			ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2)
-			ball.physicsBody?.restitution = 0.4
-			ball.physicsBody?.contactTestBitMask = ball.physicsBody!.collisionBitMask
-			ball.name = "Ball"
-			addChild(ball)
+			
+			if size.height - location.y <= Self.allowedTopInset {
+				makeBall(at: location)
+				ballCount -= 1
+				return
+			}
 		}
 	}
 	
@@ -107,6 +109,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		}
 	}
 	
+	private func makeBall(at position: CGPoint) {
+		let color = ["Blue", "Cyan", "Green", "Green", "Grey", "Purple", "Yellow", "Red"].randomElement()!
+		let ball = SKSpriteNode(imageNamed: "ball\(color).png")
+		ball.position = position
+		ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2)
+		ball.physicsBody?.restitution = 0.4
+		ball.physicsBody?.contactTestBitMask = ball.physicsBody!.collisionBitMask
+		ball.name = "Ball"
+		addChild(ball)
+	}
+	
+	private func makeBox(at position: CGPoint) {
+		let size = CGSize(width: CGFloat.random(in: 16...128), height: 16)
+		let box = SKSpriteNode(
+			color: UIColor(
+				red: CGFloat.random(in: 0...1),
+				green: CGFloat.random(in: 0...1),
+				blue: CGFloat.random(in: 0...1),
+				alpha: 1.0
+			), size: size)
+		box.name = "Box"
+		box.zRotation = CGFloat.random(in: 0...CGFloat.pi)
+		box.position = position
+		box.physicsBody = SKPhysicsBody(rectangleOf: size)
+		box.physicsBody?.isDynamic = false
+		addChild(box)
+	}
+
 	private func makeBouncer(at position: CGPoint) {
 		let bouncer = SKSpriteNode(imageNamed: "bouncer.png")
 		bouncer.position = position
@@ -143,16 +173,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	private func collisionBetween(ball: SKNode, object: SKNode) {
 		if object.name == "Good" {
-			destroy(node: ball)
+			destroy(node: ball, withFX: true)
 			score += 1
+			ballCount += 1
 		} else if object.name == "Bad" {
-			destroy(node: ball)
+			destroy(node: ball, withFX: true)
 			score -= 1
+		} else if object.name == "Box" {
+			destroy(node: object, withFX: false)
 		}
 	}
 	
-	private func destroy(node: SKNode) {
-		if let particles = SKEmitterNode(fileNamed: "FireParticles") {
+	private func destroy(node: SKNode, withFX: Bool) {
+		if withFX, let particles = SKEmitterNode(fileNamed: "FireParticles") {
 			particles.position = node.position
 			addChild(particles)
 		}
