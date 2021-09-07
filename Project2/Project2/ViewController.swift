@@ -19,6 +19,7 @@ class ViewController: UIViewController {
 	private var score = 0
 	private var correctAnswer = 0
 	private var currentQuestionIndex = 0
+	private var highscore = 0
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -37,6 +38,7 @@ class ViewController: UIViewController {
 	private func newGame(action: UIAlertAction! = nil) {
 		currentQuestionIndex = 0
 		score = 0
+		highscore = UserDefaults.standard.integer(forKey: "highscore")
 
 		askQuestion()
 	}
@@ -53,7 +55,18 @@ class ViewController: UIViewController {
 	}
 	
 	private func gameOver() {
-		let alert = UIAlertController(title: "Game Over", message: "Your final score is \(score)", preferredStyle: .alert)
+		let message: String
+		if score < highscore {
+			message = "Your final score is \(score)"
+		} else if score == highscore {
+			message = "Your final score is \(score), which is your highscore"
+		} else {
+			message = "Your final score is \(score), which is your new highscore"
+			UserDefaults.standard.setValue(score, forKey: "highscore")
+			highscore = score
+		}
+
+		let alert = UIAlertController(title: "Game Over", message: message, preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: newGame))
 		present(alert, animated: true)
 	}

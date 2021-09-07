@@ -18,17 +18,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TbS-z2-fwS">
-                            <size key="itemSize" width="142" height="193"/>
+                            <size key="itemSize" width="150" height="208"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Picture" id="Vee-wI-lr6" customClass="PictureCollectionViewCell" customModule="Project1" customModuleProvider="target">
-                                <rect key="frame" x="10" y="10" width="150" height="190"/>
+                                <rect key="frame" x="10" y="10" width="150" height="208"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vPR-4P-Rag">
-                                    <rect key="frame" x="0.0" y="0.0" width="150" height="190"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="208"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R9V-6q-9em">
@@ -40,25 +40,38 @@
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0p-zF-sAu">
                                             <rect key="frame" x="8" y="161.5" width="134" height="20.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20.5" id="UkY-cE-f8l"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cwe-Ec-L14">
+                                            <rect key="frame" x="8" y="190" width="134" height="10"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <color key="textColor" systemColor="secondaryLabelColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="R9V-6q-9em" secondAttribute="trailing" constant="8" id="2v8-cx-hgX"/>
                                         <constraint firstItem="R9V-6q-9em" firstAttribute="top" secondItem="vPR-4P-Rag" secondAttribute="top" constant="8" id="36M-9L-Vzs"/>
+                                        <constraint firstItem="Cwe-Ec-L14" firstAttribute="leading" secondItem="vPR-4P-Rag" secondAttribute="leading" constant="8" id="7LK-t0-Ybp"/>
                                         <constraint firstItem="d0p-zF-sAu" firstAttribute="leading" secondItem="vPR-4P-Rag" secondAttribute="leading" constant="8" id="ByD-Ox-Ihc"/>
+                                        <constraint firstAttribute="bottom" secondItem="Cwe-Ec-L14" secondAttribute="bottom" constant="8" id="Dy2-oe-dPJ"/>
                                         <constraint firstAttribute="trailing" secondItem="d0p-zF-sAu" secondAttribute="trailing" constant="8" id="Gtu-il-Oh7"/>
-                                        <constraint firstAttribute="bottom" secondItem="d0p-zF-sAu" secondAttribute="bottom" constant="8" id="Kbi-5H-8p6"/>
+                                        <constraint firstAttribute="trailing" secondItem="Cwe-Ec-L14" secondAttribute="trailing" constant="8" id="el5-PC-88F"/>
                                         <constraint firstItem="d0p-zF-sAu" firstAttribute="top" secondItem="R9V-6q-9em" secondAttribute="bottom" constant="8" id="lRI-un-0OP"/>
+                                        <constraint firstItem="Cwe-Ec-L14" firstAttribute="top" secondItem="d0p-zF-sAu" secondAttribute="bottom" constant="8" symbolic="YES" id="sb6-C8-bMc"/>
                                         <constraint firstItem="R9V-6q-9em" firstAttribute="leading" secondItem="vPR-4P-Rag" secondAttribute="leading" constant="8" id="tuz-ss-CwO"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="150" height="190"/>
+                                <size key="customSize" width="150" height="208"/>
                                 <connections>
                                     <outlet property="imageView" destination="R9V-6q-9em" id="zoO-1X-ZhF"/>
                                     <outlet property="label" destination="d0p-zF-sAu" id="Edh-y5-PHS"/>
+                                    <outlet property="viewCountLabel" destination="Cwe-Ec-L14" id="Gzw-YG-1Ns"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -122,6 +135,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

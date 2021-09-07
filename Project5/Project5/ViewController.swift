@@ -29,7 +29,11 @@ class ViewController: UITableViewController {
 			allWords.append("silkworm")
 		}
 		
-		startGame()
+		if let currentWord = UserDefaults.standard.string(forKey: "currentWord") {
+			loadGame(currentWord)
+		} else {
+			startGame()
+		}
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,6 +62,18 @@ class ViewController: UITableViewController {
 		title = allWords.randomElement()
 		usedWords.removeAll(keepingCapacity: true)
 		tableView.reloadData()
+		saveGame()
+	}
+	
+	private func loadGame(_ currentWord: String) {
+		title = currentWord
+		usedWords = UserDefaults.standard.stringArray(forKey: "usedWords") ?? [String]()
+		tableView.reloadData()
+	}
+	
+	private func saveGame() {
+		UserDefaults.standard.setValue(title, forKey: "currentWord")
+		UserDefaults.standard.setValue(usedWords, forKey: "usedWords")
 	}
 	
 	private func submit(_ answer: String) {
@@ -85,6 +101,7 @@ class ViewController: UITableViewController {
 		
 		usedWords.insert(answer, at: 0)
 		tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+		saveGame()
 	}
 	
 	private func showError(title: String, message: String) {

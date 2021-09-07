@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0DAF2226E7D5E6009DAE97 /* PictureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0DAF2126E7D5E6009DAE97 /* PictureInfo.swift */; };
 		5D4AEB1326DF96D2002B56F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AEB1226DF96D2002B56F0 /* AppDelegate.swift */; };
 		5D4AEB1526DF96D2002B56F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AEB1426DF96D2002B56F0 /* SceneDelegate.swift */; };
 		5D4AEB1726DF96D2002B56F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4AEB1626DF96D2002B56F0 /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D0DAF2126E7D5E6009DAE97 /* PictureInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureInfo.swift; sourceTree = "<group>"; };
 		5D4AEB0F26DF96D2002B56F0 /* Project1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D4AEB1226DF96D2002B56F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D4AEB1426DF96D2002B56F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				5D4AEB2026DF96D5002B56F0 /* Info.plist */,
 				5D4AEB3C26DF9DF5002B56F0 /* DetailsViewController.swift */,
 				5D82C57026E6A9EE00876C59 /* PictureCollectionViewCell.swift */,
+				5D0DAF2126E7D5E6009DAE97 /* PictureInfo.swift */,
 			);
 			path = Project1;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 			files = (
 				5D4AEB1726DF96D2002B56F0 /* ViewController.swift in Sources */,
 				5D4AEB1326DF96D2002B56F0 /* AppDelegate.swift in Sources */,
+				5D0DAF2226E7D5E6009DAE97 /* PictureInfo.swift in Sources */,
 				5D82C57126E6A9EE00876C59 /* PictureCollectionViewCell.swift in Sources */,
 				5D4AEB1526DF96D2002B56F0 /* SceneDelegate.swift in Sources */,
 				5D4AEB3D26DF9DF5002B56F0 /* DetailsViewController.swift in Sources */,

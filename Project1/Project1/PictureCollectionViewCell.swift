@@ -10,6 +10,7 @@ import UIKit
 class PictureCollectionViewCell: UICollectionViewCell {
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var label: UILabel!
+	@IBOutlet var viewCountLabel: UILabel!
 	
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
