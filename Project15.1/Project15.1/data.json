@@ -1,0 +1,67 @@
+[
+	{
+		"id": 1,
+		"name": "Republic of Abkhazia",
+		"flag": "Abkhazia",
+		"status": "Claimed as an autonomous republic of Georgia.",
+		"recognition": "Recognized by five UN member states.",
+		"capital": "Sukhumi",
+		"population": 250000,
+		"area": 8660
+	},
+
+	{
+		"id": 2,
+		"name": "Republic of Artsakh",
+		"flag": "Artsakh",
+		"status": "Claimed as part of Azerbaijan. De facto independent state.",
+		"recognition": "Recognized by 3 non-UN states.",
+		"capital": "Stepanakert",
+		"population": 141400,
+		"area": 7000
+	},
+
+	{
+		"id": 3,
+		"name": "Republic of Kosovo",
+		"flag": "Kosovo",
+		"status": "Claimed by Serbia.",
+		"recognition": "Recognized by 113 UN member states.",
+		"capital": "Pristina",
+		"population": 1836529,
+		"area": 10887
+	},
+
+	{
+		"id": 4,
+		"name": "Turkish Republic of Northern Cyprus",
+		"flag": "Northern Cyprus",
+		"status": "Claimed as part of the Republic of Cyprus.",
+		"recognition": "Recognized by Turkey.",
+		"capital": "North Nicosia",
+		"population": 294906,
+		"area": 3355
+	},
+
+	{
+		"id": 5,
+		"name": "Republic of South Ossetia",
+		"flag": "South Ossetia",
+		"status": "Claimed as part of Georgia.",
+		"recognition": "Recognized by five UN member states.",
+		"capital": "Tskhinvali",
+		"population": 70000,
+		"area": 3900
+	},
+
+	{
+		"id": 6,
+		"name": "Pridnestrovian Moldavian Republic",
+		"flag": "Transnistria",
+		"status": "Claimed as a territorial unit of Moldova. De facto independent state.",
+		"recognition": " Recognized by 3 non-UN states.",
+		"capital": "Tiraspol",
+		"population": 475373,
+		"area": 3500
+	},
+]
