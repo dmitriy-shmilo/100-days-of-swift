@@ -11,6 +11,8 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
 	
 	let items = ["hammer", "ball", "tv"]
+	var interval = 1.0
+	var iteration = 0
 	var isGameOver = false
 	var gameTimer: Timer?
 	var starField: SKEmitterNode!
@@ -21,6 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			scoreLabel.text = "Score: \(score)"
 		}
 	}
+	var isDragging = false
     
 	override func didMove(to view: SKView) {
 		backgroundColor = .black
@@ -47,14 +50,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		physicsWorld.gravity = CGVector.zero
 		physicsWorld.contactDelegate = self
 		
-		gameTimer = Timer.scheduledTimer(timeInterval: 0.35, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
+		gameTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(tick), userInfo: nil, repeats: true)
 	}
 	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		guard let touch = touches.first else {
+			return
+		}
+		
+		isDragging = nodes(at: touch.location(in: self)).contains(player)
+	}
 	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
 		guard let touch = touches.first else {
 			return
 		}
 		
+		if !isDragging {
+			return
+		}
+
 		var location = touch.location(in: self)
 		if location.y < 100 {
 			location.y = 100
@@ -82,11 +96,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		
 		player.removeFromParent()
 		isGameOver = true
+		
+		gameTimer?.invalidate()
 	}
 	
-	@objc private func createEnemy() {
+	@objc private func tick() {
 		guard let enemy = items.randomElement() else {
 			return
+		}
+		
+		iteration += 1
+		
+		if iteration.isMultiple(of: 20) {
+			iteration = 0
+			interval *= 0.9
+			
+			gameTimer?.invalidate()
+			gameTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(tick), userInfo: nil, repeats: true)
 		}
 		
 		let sprite = SKSpriteNode(imageNamed: enemy)
