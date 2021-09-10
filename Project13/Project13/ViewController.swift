@@ -32,11 +32,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 			return
 		}
 		
+		imageView.alpha = 0
 		currentImage = image
 		let inputImage = CIImage(image: currentImage)
 		filter.setValue(inputImage, forKey: kCIInputImageKey)
 		applyFilter()
-		dismiss(animated: true)
+		dismiss(animated: true) {
+			UIView.animate(withDuration: 0.33) { [unowned self] in
+				imageView.alpha = 1.0
+			}
+		}
 	}
 	
 	@objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {

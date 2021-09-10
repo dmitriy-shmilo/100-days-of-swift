@@ -139,9 +139,15 @@ class ViewController: UIViewController {
 			return
 		}
 		
+		sender.isEnabled = false
 		currentAnswer.text = currentAnswer.text?.appending(title)
 		activatedButtons.append(sender)
-		sender.isHidden = true
+		UIView.animate(withDuration: 0.24, animations: {
+			sender.alpha = 0.0
+		}, completion: { _ in
+			sender.isHidden = true
+		})
+		
 	}
 	
 	@objc private func submitTapped(_ sender: UIButton) {
@@ -179,18 +185,25 @@ class ViewController: UIViewController {
 		
 		loadLevel()
 		
-		for btn in letterButtons {
-			btn.isHidden = false
-		}
-		
+		UIView.animate(withDuration: 0.24, animations: { [unowned self] in
+			for btn in letterButtons {
+				btn.isHidden = false
+				btn.alpha = 1.0
+				btn.isEnabled = true
+			}
+		})
 	}
 	
 	@objc private func clearTapped(_ sender: UIButton) {
 		currentAnswer.text = ""
 		
-		for btn in activatedButtons {
-			btn.isHidden = false
-		}
+		UIView.animate(withDuration: 0.24, animations: { [unowned self] in
+			for btn in activatedButtons {
+				btn.isHidden = false
+				btn.alpha = 1.0
+				btn.isEnabled = true
+			}
+		})
 		
 		activatedButtons.removeAll()
 	}
@@ -232,8 +245,6 @@ class ViewController: UIViewController {
 			DispatchQueue.main.async { [self] in
 				cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
 				answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
-				
-				
 				
 				if letterBits.count == letterButtons.count {
 					for i in 0..<letterBits.count {

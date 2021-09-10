@@ -46,12 +46,18 @@ class ViewController: UIViewController {
 	private func askQuestion(action: UIAlertAction! = nil) {
 		countries.shuffle()
 		
-		button1.setImage(UIImage(named: countries[0]), for: .normal)
-		button2.setImage(UIImage(named: countries[1]), for: .normal)
-		button3.setImage(UIImage(named: countries[2]), for: .normal)
-		
-		correctAnswer = Int.random(in: 0...2)
-		title = "Guess: \(countries[correctAnswer].uppercased()) | Score: \(score)"
+		UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 7, options: [], animations: { [unowned self] in
+			button1.transform = CGAffineTransform.identity
+			button2.transform = CGAffineTransform.identity
+			button3.transform = CGAffineTransform.identity
+		}) { [unowned self] _ in
+			button1.setImage(UIImage(named: countries[0]), for: .normal)
+			button2.setImage(UIImage(named: countries[1]), for: .normal)
+			button3.setImage(UIImage(named: countries[2]), for: .normal)
+			
+			correctAnswer = Int.random(in: 0...2)
+			title = "Guess: \(countries[correctAnswer].uppercased()) | Score: \(score)"
+		}
 	}
 	
 	private func gameOver() {
@@ -80,25 +86,29 @@ class ViewController: UIViewController {
 	@IBAction func buttonTapped(_ sender: UIButton) {
 		currentQuestionIndex += 1
 		
-		if sender.tag == correctAnswer {
-			score += 1
-			
-			if currentQuestionIndex >= totalQuestionCount {
-				gameOver()
-			} else {
-				askQuestion()
-			}
-		} else {
-			let alert = UIAlertController(title: "Wrong", message: "That's \(countries[sender.tag].capitalized)", preferredStyle: .alert)
-			alert.addAction(UIAlertAction(title: "Continue", style: .default) { [self] a in
+		UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 7, options: [], animations: {
+			sender.transform = CGAffineTransform.init(scaleX: 0.75, y: 0.75)
+		}) { [unowned self] _ in
+			if sender.tag == correctAnswer {
+				score += 1
+				
 				if currentQuestionIndex >= totalQuestionCount {
 					gameOver()
 				} else {
-					askQuestion(action: a)
+					askQuestion()
 				}
-			})
-			present(alert, animated: true)
-			score -= 1
+			} else {
+				let alert = UIAlertController(title: "Wrong", message: "That's \(countries[sender.tag].capitalized)", preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "Continue", style: .default) { [self] a in
+					if currentQuestionIndex >= totalQuestionCount {
+						gameOver()
+					} else {
+						askQuestion(action: a)
+					}
+				})
+				present(alert, animated: true)
+				score -= 1
+			}
 		}
 	}
 }
