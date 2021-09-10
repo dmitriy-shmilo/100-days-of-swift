@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D29066126EB2BD40014DE04 /* HitEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5D29066026EB2BD40014DE04 /* HitEffect.sks */; };
+		5D29066526EB2ECA0014DE04 /* HideEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5D29066426EB2ECA0014DE04 /* HideEffect.sks */; };
 		5DDBAAC526EA3BF7002C94DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDBAAC426EA3BF7002C94DA /* AppDelegate.swift */; };
 		5DDBAAC726EA3BF7002C94DA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5DDBAAC626EA3BF7002C94DA /* GameScene.sks */; };
 		5DDBAACB26EA3BF7002C94DA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDBAACA26EA3BF7002C94DA /* GameScene.swift */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D29066026EB2BD40014DE04 /* HitEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HitEffect.sks; sourceTree = "<group>"; };
+		5D29066426EB2ECA0014DE04 /* HideEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HideEffect.sks; sourceTree = "<group>"; };
 		5DDBAAC126EA3BF7002C94DA /* Project14.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project14.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DDBAAC426EA3BF7002C94DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5DDBAAC626EA3BF7002C94DA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 				5DDBAAD126EA3BF9002C94DA /* Assets.xcassets */,
 				5DDBAAD326EA3BF9002C94DA /* Info.plist */,
 				5DDBAAE926EA3EC7002C94DA /* WhackSlotNode.swift */,
+				5D29066026EB2BD40014DE04 /* HitEffect.sks */,
+				5D29066426EB2ECA0014DE04 /* HideEffect.sks */,
 			);
 			path = Project14;
 			sourceTree = "<group>";
@@ -157,11 +163,13 @@
 				5DDBAAE326EA3CCD002C94DA /* penguinEvil@2x.png in Resources */,
 				5DDBAAD226EA3BF9002C94DA /* Assets.xcassets in Resources */,
 				5DDBAAE726EA3CCD002C94DA /* whackHole@2x.png in Resources */,
+				5D29066126EB2BD40014DE04 /* HitEffect.sks in Resources */,
 				5DDBAAE426EA3CCD002C94DA /* whackBackground@2x.png in Resources */,
 				5DDBAAE626EA3CCD002C94DA /* penguinGood@2x.png in Resources */,
 				5DDBAAE826EA3CCD002C94DA /* whack.caf in Resources */,
 				5DDBAAE226EA3CCD002C94DA /* gameOver@2x.png in Resources */,
 				5DDBAAE526EA3CCD002C94DA /* whackMask@2x.png in Resources */,
+				5D29066526EB2ECA0014DE04 /* HideEffect.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

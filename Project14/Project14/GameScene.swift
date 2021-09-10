@@ -69,7 +69,7 @@ class GameScene: SKScene {
 			if node.name == "charGood" {
 				score += 1
 				run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
-			} else if node.name == "charBad" {
+			} else if node.name == "charEvil" {
 				score -= 5
 				run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
 			}
@@ -90,9 +90,16 @@ class GameScene: SKScene {
 		if roundCount >= Self.MaxRoundCount {
 			slots.forEach { $0.hide() }
 			let gameOver = SKSpriteNode(imageNamed: "gameOver")
-			gameOver.position = CGPoint(x: size.width / 2, y: size.height / 2)
+			gameOver.position = CGPoint(x: size.width / 2, y: size.height / 2 - 60)
 			gameOver.zPosition = 1
+			
+			let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+			scoreLabel.fontSize = 80
+			scoreLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 + 60)
+			scoreLabel.text = "Your score: \(score)"
+
 			addChild(gameOver)
+			addChild(scoreLabel)
 			return
 		}
 

@@ -62,6 +62,9 @@ class WhackSlotNode: SKNode {
 		}
 		
 		charNode.run(SKAction.moveBy(x: 0, y: -80, duration: 0.05))
+		let emitter = SKEmitterNode(fileNamed: "HideEffect")!
+		emitter.zPosition = 2
+		addChild(emitter)
 		isVisible = false
 	}
 	
@@ -73,6 +76,10 @@ class WhackSlotNode: SKNode {
 		let invisible = SKAction.run { [unowned self] in
 			self.isVisible = false
 		}
+		
+		let emitter = SKEmitterNode(fileNamed: "HitEffect")!
+		emitter.zPosition = 2
+		addChild(emitter)
 		
 		charNode.run(SKAction.sequence([delay, hide, invisible]))
 	}
