@@ -11,7 +11,11 @@ import CoreImage
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 	
 	@IBOutlet var intensitySlider: UISlider!
+	@IBOutlet var radiusSlider: UISlider!
+	@IBOutlet var scaleSlider: UISlider!
 	@IBOutlet var imageView: UIImageView!
+	@IBOutlet var changeFilterButton: UIButton!
+
 	var currentImage: UIImage!
 	var context: CIContext!
 	var filter: CIFilter!
@@ -61,10 +65,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	}
 	
 	@IBAction func save(_ sender: Any) {
-		guard let image = imageView.image else {
-			return
+		if let image = imageView.image {
+			UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+		} else {
+			let alert = UIAlertController(title: "Error", message: "Pick and alter an image first", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+			present(alert, animated: true)
 		}
-		UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
 	}
 	
 	@IBAction func intensityChanged(_ sender: Any) {
@@ -90,11 +97,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		}
 		
 		if keys.contains(kCIInputRadiusKey) {
-			filter.setValue(intensitySlider.value * 200, forKey: kCIInputRadiusKey)
+			filter.setValue(radiusSlider.value, forKey: kCIInputRadiusKey)
 		}
 		
 		if keys.contains(kCIInputScaleKey) {
-			filter.setValue(intensitySlider.value * 10, forKey: kCIInputScaleKey)
+			filter.setValue(scaleSlider.value, forKey: kCIInputScaleKey)
 		}
 		
 		if keys.contains(kCIInputCenterKey) {
@@ -115,6 +122,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 			return
 		}
 		
+		changeFilterButton.titleLabel?.text = actionTitle
 		filter = CIFilter(name: actionTitle)
 		let inputImage = CIImage(image: currentImage)
 		filter.setValue(inputImage, forKey: kCIInputImageKey)
