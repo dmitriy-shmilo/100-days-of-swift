@@ -29,19 +29,20 @@ class ViewController: UIViewController, MKMapViewDelegate {
 		}
 		
 		let identifier = "CapitalAnnotation"
-		var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
 		
-		if annotationView == nil {
-			annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-			annotationView?.canShowCallout = true
+		
+		if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+			annotationView.annotation = annotation
+			return annotationView
+		} else {
+			let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+			annotationView.canShowCallout = true
+			annotationView.pinTintColor = .purple
 			
 			let btn = UIButton(type: .detailDisclosure)
-			annotationView?.rightCalloutAccessoryView = btn
-		} else {
-			annotationView?.annotation = annotation
+			annotationView.rightCalloutAccessoryView = btn
+			return annotationView
 		}
-		
-		return annotationView
 	}
 	
 	func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -49,10 +50,24 @@ class ViewController: UIViewController, MKMapViewDelegate {
 			return
 		}
 		
-		let placeName = capital.title
-		let placeInfo = capital.info
-		let alert = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+		if let details = storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController {
+			details.city = capital.title
+			navigationController?.pushViewController(details, animated: true)
+		}
+	}
+	
+	@IBAction func selectMapType(_ sender: Any) {
+		let alert = UIAlertController(title: "Select map type", message: nil, preferredStyle: .actionSheet)
+		alert.addAction(UIAlertAction(title: "Standard", style: .default, handler: { [weak self] _ in
+			self?.mapView.mapType = .standard
+		}))
+		alert.addAction(UIAlertAction(title: "Satelite", style: .default, handler: { [weak self] _ in
+			self?.mapView.mapType = .satellite
+		}))
+		alert.addAction(UIAlertAction(title: "Hybrid", style: .default, handler: { [weak self] _ in
+			self?.mapView.mapType = .hybrid
+		}))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 		present(alert, animated: true)
 	}
 }

@@ -32,7 +32,13 @@
                             <constraint firstAttribute="bottomMargin" secondItem="Gxg-CF-ebM" secondAttribute="bottom" constant="-34" id="fiE-sB-Wjr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="d5o-eQ-GSE"/>
+                    <navigationItem key="navigationItem" id="d5o-eQ-GSE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="CMG-7j-bSK">
+                            <connections>
+                                <action selector="selectMapType:" destination="BYZ-38-t0r" id="9l6-6i-U6S"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="Gxg-CF-ebM" id="4ac-0O-McE"/>
                     </connections>
@@ -40,6 +46,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="889.85507246376824" y="75.669642857142847"/>
+        </scene>
+        <!--Details View Controller-->
+        <scene sceneID="9rs-yn-rv9">
+            <objects>
+                <viewController storyboardIdentifier="DetailsViewController" id="AsH-qr-gsW" customClass="DetailsViewController" customModule="Project16" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="t2a-nA-POF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9EN-gE-kHT">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CDs-ag-0lq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9EN-gE-kHT" firstAttribute="leading" secondItem="CDs-ag-0lq" secondAttribute="leading" id="276-hg-duX"/>
+                            <constraint firstAttribute="bottom" secondItem="9EN-gE-kHT" secondAttribute="bottom" id="Syk-S5-yNR"/>
+                            <constraint firstItem="9EN-gE-kHT" firstAttribute="trailing" secondItem="CDs-ag-0lq" secondAttribute="trailing" id="UPZ-4A-8Fq"/>
+                            <constraint firstItem="9EN-gE-kHT" firstAttribute="top" secondItem="t2a-nA-POF" secondAttribute="top" id="lUM-1M-Ehb"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="9EN-gE-kHT" id="txH-Qu-GeC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r8G-Vh-LAN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1653.6231884057972" y="79.6875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pkG-Lj-cyt">
