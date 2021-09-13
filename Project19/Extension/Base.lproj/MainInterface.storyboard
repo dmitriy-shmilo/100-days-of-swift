@@ -20,11 +20,23 @@
                                 <rect key="frame" x="0.0" y="44" width="320" height="44"/>
                                 <items>
                                     <navigationItem id="3HJ-uW-3hn">
-                                        <barButtonItem key="leftBarButtonItem" title="Done" style="done" id="WYi-yp-eM6">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="play" id="WYi-yp-eM6">
                                             <connections>
                                                 <action selector="done" destination="ObA-dk-sSI" id="Qdu-qn-U6V"/>
                                             </connections>
                                         </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem systemItem="organize" id="kuu-eT-7Fs">
+                                                <connections>
+                                                    <action selector="load:" destination="ObA-dk-sSI" id="4yb-S6-xql"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="compose" id="pH7-mT-fnK">
+                                                <connections>
+                                                    <action selector="rename:" destination="ObA-dk-sSI" id="dOS-LZ-Zke"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -48,6 +60,7 @@
                             <constraint firstItem="NOA-Dm-cuz" firstAttribute="top" secondItem="VVe-Uw-JpX" secondAttribute="top" id="we0-1t-bgp"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="jNz-1s-ZGx"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="528"/>
                     <connections>
@@ -57,7 +70,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X47-rx-isc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131.8840579710145" y="69.642857142857139"/>
+            <point key="canvasLocation" x="1042.0289855072465" y="69.642857142857139"/>
         </scene>
     </scenes>
     <resources>
