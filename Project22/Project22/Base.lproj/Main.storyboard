@@ -16,6 +16,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7MR-a2-cTq">
+                                <rect key="frame" x="79" y="325" width="256" height="256"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="256" id="3E1-7i-zFn"/>
+                                    <constraint firstAttribute="width" secondItem="7MR-a2-cTq" secondAttribute="height" multiplier="1:1" id="wY8-f6-Q5X"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UNKNOWN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ys3-go-HaO">
                                 <rect key="frame" x="102" y="426.5" width="210.5" height="53"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="44"/>
@@ -26,10 +34,16 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="7MR-a2-cTq" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="7fg-zU-ccv"/>
                             <constraint firstItem="Ys3-go-HaO" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="EtD-Xx-No3"/>
+                            <constraint firstItem="7MR-a2-cTq" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="GkY-xe-HvH"/>
                             <constraint firstItem="Ys3-go-HaO" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="PWb-dh-8ag"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="circle" destination="7MR-a2-cTq" id="xyu-kp-QET"/>
+                        <outlet property="distanceLabel" destination="Ys3-go-HaO" id="WQ3-bA-pUI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
