@@ -10,20 +10,30 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-	var gameTimer: Timer?
-	var fireworks = [SKNode]()
-	let leftEdge = -22
-	let bottomEdge = -22
-	let rightEdge = 1024 + 22
-	var score = 0 {
+	private static let MaxLaunches = 5
+
+	private var currentLaunch = 0
+	private var gameTimer: Timer?
+	private var fireworks = [SKNode]()
+	private var scoreLabel: SKLabelNode!
+
+	private let leftEdge = -22
+	private let bottomEdge = -22
+	private let rightEdge = 1024 + 22
+
+	private var score = 0 {
 		didSet {
-			
+			scoreLabel?.text = "Score: \(score)"
 		}
 	}
 
 	override func didMove(to view: SKView) {
 		gameTimer = Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { [weak self] _ in
 			self?.launchFireworks()
+		}
+		
+		if let label = childNode(withName: "scoreLabel") as? SKLabelNode {
+			scoreLabel = label
 		}
 	}
 	
@@ -79,6 +89,9 @@ class GameScene: SKScene {
 	private func explode(firework: SKNode) {
 		if let emitter = SKEmitterNode(fileNamed: "explode"), let parent = firework.parent {
 			emitter.position = parent.position
+			let wait = SKAction.wait(forDuration: 0.5)
+			let remove = SKAction.removeFromParent()
+			emitter.run(SKAction.sequence([wait, remove]))
 			addChild(emitter)
 			parent.removeFromParent()
 		}
@@ -115,6 +128,11 @@ class GameScene: SKScene {
 	private func launchFireworks() {
 		let movementAmount: CGFloat = 1800.0
 		
+		currentLaunch += 1
+		if currentLaunch >= Self.MaxLaunches {
+			gameTimer?.invalidate()
+		}
+
 		switch Int.random(in: 0...3) {
 			case 0:
 				createFirework(xMovement: 0, x: 512, y: bottomEdge)
