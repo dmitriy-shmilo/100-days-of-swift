@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class ViewController: UIViewController {
 	
@@ -33,6 +34,7 @@ class ViewController: UIViewController {
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(showScoreTapped))
 		
 		newGame()
+		requestNotificationPermissions()
 	}
 	
 	private func newGame(action: UIAlertAction! = nil) {
@@ -75,6 +77,27 @@ class ViewController: UIViewController {
 		let alert = UIAlertController(title: "Game Over", message: message, preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: newGame))
 		present(alert, animated: true)
+	}
+	
+	private func requestNotificationPermissions() {
+		UNUserNotificationCenter
+			.current()
+			.requestAuthorization(options: .alert, completionHandler: { (granted, error) in
+			if granted {
+				self.scheduleNotifications()
+			}
+		})
+	}
+	
+	private func scheduleNotifications() {
+		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 24 * 60 * 60, repeats: true)
+		let content = UNMutableNotificationContent()
+		content.title = "Play the game"
+		let request = UNNotificationRequest(identifier: "Project2PlayReminder", content: content, trigger: trigger)
+
+		UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+		UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+		UNUserNotificationCenter.current().add(request)
 	}
 	
 	@objc private func showScoreTapped() {
