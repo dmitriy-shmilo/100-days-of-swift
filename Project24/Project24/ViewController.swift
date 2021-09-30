@@ -12,6 +12,13 @@ extension String {
 		return String(self[index(startIndex, offsetBy: i)])
 	}
 
+	func withPrefix(prefix: String) -> String {
+		guard hasPrefix(prefix) else {
+			return self
+		}
+		return prefix + self
+	}
+	
 	func deletingPrefix(prefix: String) -> String {
 		guard hasPrefix(prefix) else {
 			return self
@@ -32,6 +39,17 @@ extension String {
 		}
 		
 		return firstLetter.uppercased() + dropFirst()
+	}
+	
+	var isNumeric: Bool {
+		guard let _ = Double(self) else {
+			return false
+		}
+		return true
+	}
+	
+	var lines: [String] {
+		components(separatedBy: .newlines)
 	}
 }
 
