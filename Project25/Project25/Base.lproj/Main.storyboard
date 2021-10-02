@@ -54,16 +54,30 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Selfie Share" id="s99-OH-TLA">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="QwR-Ch-jyY">
-                            <connections>
-                                <action selector="showConnectionPrompt:" destination="MUa-Gi-W0C" id="wdb-NB-HIW"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="j8S-l9-xFG">
-                            <connections>
-                                <action selector="importPicture:" destination="MUa-Gi-W0C" id="0lE-ve-7Kg"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="add" id="QwR-Ch-jyY">
+                                <connections>
+                                    <action selector="showConnectionPrompt:" destination="MUa-Gi-W0C" id="wdb-NB-HIW"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="organize" id="YrS-6l-xij">
+                                <connections>
+                                    <action selector="showPeers:" destination="MUa-Gi-W0C" id="Fhe-ZN-Aqe"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="camera" id="j8S-l9-xFG">
+                                <connections>
+                                    <action selector="importPicture:" destination="MUa-Gi-W0C" id="0lE-ve-7Kg"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="compose" id="fql-3P-yuc">
+                                <connections>
+                                    <action selector="sendMessge:" destination="MUa-Gi-W0C" id="aiT-ZQ-Y6p"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t19-tR-g2C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

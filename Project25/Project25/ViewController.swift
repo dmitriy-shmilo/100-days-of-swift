@@ -8,6 +8,16 @@
 import UIKit
 import MultipeerConnectivity
 
+enum MessageType: Int64, Codable {
+	case text
+	case image
+}
+
+struct Message: Codable {
+	let type: MessageType
+	let data: Data
+}
+
 class ViewController:
 	UICollectionViewController,
 	UIImagePickerControllerDelegate & UINavigationControllerDelegate,
@@ -60,7 +70,8 @@ class ViewController:
 		if !mcSession.connectedPeers.isEmpty {
 			if let imageData = image.pngData() {
 				do {
-					try mcSession.send(imageData, toPeers: mcSession.connectedPeers, with: .reliable)
+					let message = Message(type: .image, data: imageData)
+					try mcSession.send(JSONEncoder().encode(message), toPeers: mcSession.connectedPeers, with: .reliable)
 				}
 				catch {
 					print("\(error.localizedDescription)")
@@ -85,6 +96,9 @@ class ViewController:
 			print("\(peerID.displayName) connecting")
 		case .notConnected:
 			print("\(peerID.displayName) disconnected")
+			let alert = UIAlertController(title: "Peer disconnected", message: "\(peerID.displayName)", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+			present(alert, animated: true)
 		@unknown default:
 			print("\(peerID.displayName) state changed to \(state.rawValue)")
 		}
@@ -92,12 +106,25 @@ class ViewController:
 	
 	func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
 		DispatchQueue.main.async { [weak self] in
-			guard let image = UIImage(data: data) else {
+			guard let self = self else {
 				return
 			}
-			
-			self?.images.insert(image, at: 0)
-			self?.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+
+			if let message = try? JSONDecoder().decode(Message.self, from: data) {
+				switch message.type {
+				case .text:
+					let alert = UIAlertController(title: "Message from \(peerID.displayName)",
+												  message: String(data: message.data, encoding: .utf8),
+												  preferredStyle: .alert)
+					alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+					self.present(alert, animated: true)
+				case .image:
+					if let image = UIImage(data: message.data) {
+						self.images.insert(image, at: 0)
+						self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+					}
+				}
+			}
 		}
 	}
 	
@@ -143,6 +170,46 @@ class ViewController:
 		alert.addAction(UIAlertAction(title: "Host", style: .default, handler: onHostSelected))
 		alert.addAction(UIAlertAction(title: "Join", style: .default, handler: onJoinSelected))
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+		present(alert, animated: true)
+	}
+	
+	@IBAction func sendMessge(_ sender: Any) {
+		let alert = UIAlertController(title: "Enter your message", message: nil, preferredStyle: .alert)
+		alert.addTextField()
+		alert.addAction(UIAlertAction(
+			title: "Send",
+			style: .default,
+			handler: { [weak self, weak alert] _ in
+				guard let self = self,
+					  let alert = alert,
+					  let text = alert.textFields?[0].text,
+					  let mcSession = self.mcSession else {
+					return
+				}
+				
+				if !text.isEmpty {
+					do {
+						let message = Message(type: .text, data: Data(text.utf8))
+						try mcSession.send(JSONEncoder().encode(message), toPeers: mcSession.connectedPeers, with: .reliable)
+					}
+					catch {
+						print("\(error.localizedDescription)")
+					}
+				}
+				
+			})
+		)
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+		present(alert, animated: true)
+	}
+	
+	@IBAction func showPeers(_ sender: Any) {
+		guard let session = self.mcSession else {
+			return
+		}
+		let peers = session.connectedPeers.map { $0.displayName }.joined(separator: "\n")
+		let alert = UIAlertController(title: "Current Peers", message: peers, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "OK", style: .cancel))
 		present(alert, animated: true)
 	}
 
