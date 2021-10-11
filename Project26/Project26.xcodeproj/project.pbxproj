@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0776C92714530800ADABCB /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5D0776C82714530800ADABCB /* level2.txt */; };
+		5D0776CB2714540200ADABCB /* level0.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5D0776CA2714540200ADABCB /* level0.txt */; };
 		5DDD82F22712EB820045F4FF /* vortex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DDD82EB2712EB820045F4FF /* vortex@2x.png */; };
 		5DDD82F32712EB820045F4FF /* block@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DDD82EC2712EB820045F4FF /* block@2x.png */; };
 		5DDD82F42712EB820045F4FF /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DDD82ED2712EB820045F4FF /* star@2x.png */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D0776C82714530800ADABCB /* level2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
+		5D0776CA2714540200ADABCB /* level0.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level0.txt; sourceTree = "<group>"; };
 		5DDD82EB2712EB820045F4FF /* vortex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vortex@2x.png"; sourceTree = "<group>"; };
 		5DDD82EC2712EB820045F4FF /* block@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "block@2x.png"; sourceTree = "<group>"; };
 		5DDD82ED2712EB820045F4FF /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
@@ -62,6 +66,8 @@
 				5DDD82EF2712EB820045F4FF /* player@2x.png */,
 				5DDD82ED2712EB820045F4FF /* star@2x.png */,
 				5DDD82EB2712EB820045F4FF /* vortex@2x.png */,
+				5D0776C82714530800ADABCB /* level2.txt */,
+				5D0776CA2714540200ADABCB /* level0.txt */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -157,9 +163,11 @@
 			files = (
 				5DEABB312709BE5B007AB419 /* Main.storyboard in Resources */,
 				5DEABB282709BE5B007AB419 /* GameScene.sks in Resources */,
+				5D0776C92714530800ADABCB /* level2.txt in Resources */,
 				5DDD82F52712EB820045F4FF /* background@2x.jpg in Resources */,
 				5DDD82F42712EB820045F4FF /* star@2x.png in Resources */,
 				5DEABB332709BE5E007AB419 /* Assets.xcassets in Resources */,
+				5D0776CB2714540200ADABCB /* level0.txt in Resources */,
 				5DEABB362709BE5E007AB419 /* LaunchScreen.storyboard in Resources */,
 				5DDD82F32712EB820045F4FF /* block@2x.png in Resources */,
 				5DDD82F72712EB820045F4FF /* finish@2x.png in Resources */,
