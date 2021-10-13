@@ -125,6 +125,57 @@ class ViewController: UIViewController {
 		imageView.image = img
 	}
 
+	private func drawFace() {
+		let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+		let img = renderer.image { ctx in
+			ctx.cgContext.setFillColor(UIColor.yellow.cgColor)
+			ctx.cgContext.fillEllipse(in: CGRect(x: 6, y: 6, width: 500, height: 500))
+			ctx.cgContext.setFillColor(UIColor.brown.cgColor)
+			ctx.cgContext.fillEllipse(in: CGRect(x: 512 / 2 - 100, y: 512 / 2 - 75, width: 20, height: 45))
+			ctx.cgContext.fillEllipse(in: CGRect(x: 512 / 2 + 80, y: 512 / 2 - 75, width: 20, height: 45))
+			ctx.cgContext.fill(CGRect(x: 512 / 2 - 50, y: 512 / 2 + 50, width: 100, height: 10))
+		}
+		imageView.image = img
+	}
+
+	private func drawText() {
+		let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+		let img = renderer.image { ctx in
+			let ctx = ctx.cgContext
+
+			// T
+			ctx.move(to: CGPoint(x: 0, y: 200))
+			ctx.addLine(to: CGPoint(x: 100, y: 200))
+			ctx.move(to: CGPoint(x: 50, y: 200))
+			ctx.addLine(to: CGPoint(x: 50, y: 300))
+
+			// W
+			ctx.move(to: CGPoint(x: 100, y: 200))
+			ctx.addLine(to: CGPoint(x: 120, y: 300))
+			ctx.addLine(to: CGPoint(x: 140, y: 220))
+			ctx.addLine(to: CGPoint(x: 160, y: 300))
+			ctx.addLine(to: CGPoint(x: 180, y: 200))
+
+			// I
+			ctx.move(to: CGPoint(x: 200, y: 200))
+			ctx.addLine(to: CGPoint(x: 220, y: 200))
+			ctx.move(to: CGPoint(x: 210, y: 200))
+			ctx.addLine(to: CGPoint(x: 210, y: 300))
+			ctx.move(to: CGPoint(x: 200, y: 300))
+			ctx.addLine(to: CGPoint(x: 220, y: 300))
+
+			// N
+			ctx.move(to: CGPoint(x: 250, y: 300))
+			ctx.addLine(to: CGPoint(x: 250, y: 200))
+			ctx.addLine(to: CGPoint(x: 300, y: 300))
+			ctx.addLine(to: CGPoint(x: 300, y: 200))
+
+			ctx.setLineWidth(2)
+			ctx.strokePath()
+		}
+		imageView.image = img
+	}
+
 	@IBAction func buttonTapped(_ sender: UIButton) {
 		drawType += 1
 
@@ -139,6 +190,10 @@ class ViewController: UIViewController {
 			drawRotatedSquares()
 		case 4:
 			drawLines()
+		case 5:
+			drawFace()
+		case 6:
+			drawText()
 		default:
 			break
 		}

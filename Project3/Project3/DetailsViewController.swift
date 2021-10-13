@@ -41,9 +41,36 @@ class DetailsViewController: UIViewController {
 		super.viewWillDisappear(animated)
 		navigationController?.hidesBarsOnTap = false
 	}
-	
+
+	private func markImage(image: UIImage) -> UIImage {
+		let renderer = UIGraphicsImageRenderer(size: image.size)
+		return renderer.image { ctx in
+			let labelRect = CGRect(
+				x: 0,
+				y: image.size.height - 64,
+				width: image.size.width,
+				height: 64
+			)
+			image.draw(at: CGPoint(x: 0, y: 0))
+			ctx.cgContext.setFillColor(CGColor(gray: 0, alpha: 0.2))
+			ctx.cgContext.fill(labelRect)
+			let string = "From Storm Viewer"
+			let paragraph = NSMutableParagraphStyle()
+			paragraph.alignment = .center
+			NSAttributedString(
+				string: string,
+				attributes: [
+					.font: UIFont.systemFont(ofSize: 32),
+					.paragraphStyle: paragraph,
+					.foregroundColor: UIColor.white
+				]
+			).draw(in: labelRect)
+		}
+	}
 	@objc private func shareTapped() {
-		guard let image = imageView.image?.jpegData(compressionQuality: 0.8) else {
+		guard let image = imageView.image,
+			  let image = markImage(image: image)
+				.jpegData(compressionQuality: 0.8) else {
 			print("No image found.")
 			return
 		}
