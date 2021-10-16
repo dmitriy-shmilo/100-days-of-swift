@@ -33,6 +33,16 @@ class ViewController: UIViewController {
 			name: UIApplication.willResignActiveNotification,
 			object: nil
 		)
+
+		if KeychainWrapper.standard.string(forKey: "Password") == nil {
+			showPasswordPrompt(title: "Set fallback password") { pass in
+				if let pass = pass {
+					KeychainWrapper.standard.set(pass, forKey: "Password")
+				} else {
+					fatalError("Missing password")
+				}
+			}
+		}
 	}
 
 	@objc func adjustforKeyboard(notification: Notification) {
@@ -53,7 +63,7 @@ class ViewController: UIViewController {
 		textView.scrollRangeToVisible(selectedRange)
 	}
 
-	@objc func saveSecretMessage() {
+	@IBAction func saveSecretMessage() {
 		guard !textView.isHidden else {
 			return
 		}
@@ -77,27 +87,16 @@ class ViewController: UIViewController {
 						if success {
 							self?.unlockSecretMessage()
 						} else {
-							print(error.debugDescription)
-							let ac = UIAlertController(
-								title: "Authentication failed",
-								message: "You could not be verified; please try again.",
-								preferredStyle: .alert
-							)
-							ac.addAction(UIAlertAction(title: "OK", style: .cancel))
-							self?.present(ac, animated: true)
+							if let error = error {
+								print(error)
+							}
+							self?.passwordFallback()
 						}
 					}
 			}
 		} else {
-			let ac = UIAlertController(
-				title: "Biometry unavailable",
-				message: "Your device is not configured for biometric authentication.",
-				preferredStyle: .alert
-			)
-			ac.addAction(UIAlertAction(title: "OK", style: .cancel))
-			self.present(ac, animated: true)
+			passwordFallback()
 		}
-
 	}
 
 	private func unlockSecretMessage() {
@@ -108,6 +107,31 @@ class ViewController: UIViewController {
 		}
 	}
 
+	private func passwordFallback() {
+		showPasswordPrompt(title: "Enter the password:") { [weak self] pass in
+			if let storedPass = KeychainWrapper.standard.string(forKey: "Password") {
+				if pass == storedPass {
+					self?.unlockSecretMessage()
+				} else {
+					self?.showErrorMessage(title: "Incorrect password", message: "")
+				}
+			} else {
+				fatalError("Missing password")
+			}
+		}
+	}
 
+	private func showPasswordPrompt(title: String, action: @escaping (String?) -> ()) {
+		let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+		alert.addTextField()
+		alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] _ in action(alert?.textFields?[0].text) }))
+		present(alert, animated: true)
+	}
+
+	private func showErrorMessage(title: String, message: String) {
+		let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+		present(alert, animated: true)
+	}
 }
 

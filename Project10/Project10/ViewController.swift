@@ -6,19 +6,28 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
-	var people = [Person]()
+	private var people = [Person]()
+	private var isAuthenticated = false
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPerson))
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(authenticate))
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(hideData),
+			name: UIApplication.willResignActiveNotification,
+			object: nil
+		)
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		people.count
+		isAuthenticated ? people.count : 0
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -80,6 +89,10 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
 	}
 	
 	@objc private func addPerson() {
+		guard isAuthenticated else {
+			return
+		}
+
 		let picker = UIImagePickerController()
 		if UIImagePickerController.isSourceTypeAvailable(.camera) {
 			picker.sourceType = .camera
@@ -91,6 +104,50 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
 		present(picker, animated: true)
 	}
 
+	@objc private func hideData() {
+		isAuthenticated = false
+		collectionView.reloadData()
+	}
 
+	@objc private func authenticate() {
+		guard !isAuthenticated else {
+			return
+		}
+
+		let context = LAContext()
+		var error: NSError?
+
+		if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+			let reason = "Identify yourself"
+			context.evaluatePolicy(
+				.deviceOwnerAuthenticationWithBiometrics,
+				localizedReason: reason) { [weak self] success, error in
+
+					DispatchQueue.main.async {
+						if success {
+							self?.isAuthenticated = true
+							self?.collectionView.reloadData()
+						} else {
+							print(error.debugDescription)
+							let ac = UIAlertController(
+								title: "Authentication failed",
+								message: "You could not be verified; please try again.",
+								preferredStyle: .alert
+							)
+							ac.addAction(UIAlertAction(title: "OK", style: .cancel))
+							self?.present(ac, animated: true)
+						}
+					}
+			}
+		} else {
+			let ac = UIAlertController(
+				title: "Biometry unavailable",
+				message: "Your device is not configured for biometric authentication.",
+				preferredStyle: .alert
+			)
+			ac.addAction(UIAlertAction(title: "OK", style: .cancel))
+			self.present(ac, animated: true)
+		}
+	}
 }
 
