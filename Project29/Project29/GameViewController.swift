@@ -19,20 +19,21 @@ class GameViewController: UIViewController {
 	@IBOutlet private var velocityLabel: UILabel!
 	@IBOutlet private var launchButton: UIButton!
 	@IBOutlet private var playerLabel: UILabel!
+	@IBOutlet private var player1ScoreLabel: UILabel!
+	@IBOutlet private var player2ScoreLabel: UILabel!
+	@IBOutlet private var windLabel: UILabel!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		if let view = self.view as! SKView? {
-			// Load the SKScene from 'GameScene.sks'
 			if let scene = SKScene(fileNamed: "GameScene") as? GameScene {
-				// Set the scale mode to scale to fit the window
 				scene.scaleMode = .aspectFill
 
-				// Present the scene
-				view.presentScene(scene)
 				self.scene = scene
 				scene.viewController = self
+				view.presentScene(scene)
+
 			}
 
 			view.ignoresSiblingOrder = true
@@ -78,6 +79,22 @@ class GameViewController: UIViewController {
 		velocityLabel.isHidden = false
 
 		launchButton.isHidden = false
+	}
+
+	func updateWind(_ wind: CGFloat) {
+		windLabel.text = "Wind: \(wind > 0 ? ">" : "<") \(Int(wind * 10))"
+	}
+
+	func updateScore(_ score: Int, for player: Int) {
+		guard 0...1 ~= player else {
+			fatalError("Incorrect player number: \(player)")
+		}
+
+		if player == 0 {
+			player1ScoreLabel.text = "P1: \(score)"
+		} else if player == 1 {
+			player2ScoreLabel.text = "P2: \(score)"
+		}
 	}
 
 	@IBAction private func angleChanged(_ sender: UISlider) {

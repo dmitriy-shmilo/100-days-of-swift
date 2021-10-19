@@ -15,6 +15,8 @@ enum CollisionTypes: UInt32 {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+	private static let maxScore = 3
+
 	weak var viewController: GameViewController?
 	private var buildings = [BuildingNode]()
 	private var player1: SKSpriteNode!
@@ -22,11 +24,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	private var banana: SKSpriteNode!
 
 	private var currentPlayer = 0
+	private var p1Score = 0
+	private var p2Score = 0
 
 	override func didMove(to view: SKView) {
 		backgroundColor = UIColor(hue: 0.669, saturation: 0.99, brightness: 0.67, alpha: 1)
-		createBuildings()
-		createPlayers()
+		reset()
 		physicsWorld.contactDelegate = self
 	}
 
@@ -175,31 +178,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			addChild(explosion)
 		}
 
+		if player.name == "player1" {
+			p2Score += 1
+			viewController?.updateScore(p2Score, for: 1)
+		} else {
+			p1Score += 1
+			viewController?.updateScore(p1Score, for: 0)
+		}
+
 		player.removeFromParent()
 		banana.removeFromParent()
 
-		DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
 			guard let self = self else {
 				return
 			}
-			let scene = GameScene(size: self.size)
-			scene.viewController = self.viewController
-			self.viewController?.scene = scene
 
-			self.changePlayer()
-			scene.currentPlayer = self.currentPlayer
-
-			let transition = SKTransition.doorway(withDuration: 1.5)
-			self.view?.presentScene(scene, transition: transition)
+			if self.p1Score >= Self.maxScore || self.p2Score >= Self.maxScore {
+				if let scene = SKScene(fileNamed: "GameOverScene") as? GameOverScene {
+					self.view?.presentScene(scene, transition: .crossFade(withDuration: 0.25))
+				}
+			} else {
+				self.changePlayer()
+				self.reset()
+			}
 		}
 	}
 
 	private func changePlayer() {
 		currentPlayer = (currentPlayer + 1) % 2
 		viewController?.activatePlayer(number: currentPlayer)
+		updateWind()
 	}
 
-	func bananaHit(building: SKNode, atPoint contactPoint: CGPoint) {
+	private func bananaHit(building: SKNode, atPoint contactPoint: CGPoint) {
 		guard let building = building as? BuildingNode else {
 			return
 		}
@@ -217,5 +229,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 		changePlayer()
 	}
-	
+
+	private func updateWind() {
+		let wind = CGFloat.random(in: -10...10)
+		physicsWorld.gravity = CGVector(dx: wind, dy: -9.8)
+		viewController?.updateWind(wind)
+	}
+
+	private func reset() {
+		buildings.forEach {
+			$0.removeFromParent()
+		}
+		buildings.removeAll()
+		player1?.removeFromParent()
+		player2?.removeFromParent()
+
+
+		createBuildings()
+		createPlayers()
+		updateWind()
+		viewController?.updateScore(p1Score, for: 0)
+		viewController?.updateScore(p2Score, for: 1)
+		viewController?.activatePlayer(number: currentPlayer)
+	}
 }

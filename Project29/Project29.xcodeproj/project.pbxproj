@@ -17,6 +17,8 @@
 		5D028D48271960D700BCC252 /* BuildingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D028D47271960D700BCC252 /* BuildingNode.swift */; };
 		5D142246271C8CFB00FD38E7 /* hitBuilding.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5D142244271C8CFB00FD38E7 /* hitBuilding.sks */; };
 		5D142247271C8CFB00FD38E7 /* hitPlayer.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5D142245271C8CFB00FD38E7 /* hitPlayer.sks */; };
+		5D698555271E9B6F0046F280 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D698554271E9B6F0046F280 /* GameOverScene.swift */; };
+		5D698557271E9B970046F280 /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5D698556271E9B970046F280 /* GameOverScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		5D028D47271960D700BCC252 /* BuildingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingNode.swift; sourceTree = "<group>"; };
 		5D142244271C8CFB00FD38E7 /* hitBuilding.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hitBuilding.sks; sourceTree = "<group>"; };
 		5D142245271C8CFB00FD38E7 /* hitPlayer.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hitPlayer.sks; sourceTree = "<group>"; };
+		5D698554271E9B6F0046F280 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		5D698556271E9B970046F280 /* GameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 				5D028D3D2719607300BCC252 /* Assets.xcassets */,
 				5D028D3F2719607300BCC252 /* LaunchScreen.storyboard */,
 				5D028D47271960D700BCC252 /* BuildingNode.swift */,
+				5D698554271E9B6F0046F280 /* GameOverScene.swift */,
+				5D698556271E9B970046F280 /* GameOverScene.sks */,
 			);
 			path = Project29;
 			sourceTree = "<group>";
@@ -135,6 +141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D698557271E9B970046F280 /* GameOverScene.sks in Resources */,
 				5D028D3C2719606F00BCC252 /* Main.storyboard in Resources */,
 				5D142246271C8CFB00FD38E7 /* hitBuilding.sks in Resources */,
 				5D142247271C8CFB00FD38E7 /* hitPlayer.sks in Resources */,
@@ -151,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D698555271E9B6F0046F280 /* GameOverScene.swift in Sources */,
 				5D028D372719606F00BCC252 /* GameScene.swift in Sources */,
 				5D028D48271960D700BCC252 /* BuildingNode.swift in Sources */,
 				5D028D392719606F00BCC252 /* GameViewController.swift in Sources */,
