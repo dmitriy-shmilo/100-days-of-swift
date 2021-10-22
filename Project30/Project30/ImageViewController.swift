@@ -9,11 +9,11 @@
 import UIKit
 
 class ImageViewController: UIViewController {
-	weak var owner: SelectionViewController!
-	var image: String!
-	var animTimer: Timer!
+	weak var owner: SelectionViewController?
+	var image: String?
 
-	var imageView: UIImageView!
+	private var animTimer: Timer?
+	private var imageView: UIImageView?
 
 	override func loadView() {
 		super.loadView()
@@ -21,7 +21,7 @@ class ImageViewController: UIViewController {
 		view.backgroundColor = UIColor.black
 
 		// create an image view that fills the screen
-		imageView = UIImageView()
+		let imageView = UIImageView()
 		imageView.contentMode = .scaleAspectFit
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.alpha = 0
@@ -33,60 +33,68 @@ class ImageViewController: UIViewController {
 		imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 		imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
 		imageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+		self.imageView = imageView
 
 		// schedule an animation that does something vaguely interesting
 		animTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] timer in
 			// do something exciting with our image
-			self?.imageView.transform = CGAffineTransform.identity
+			self?.imageView?.transform = CGAffineTransform.identity
 
 			UIView.animate(withDuration: 3) {
-				self?.imageView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+				self?.imageView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
 			}
 		}
 	}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-		title = image.replacingOccurrences(of: "-Large.jpg", with: "")
-		let path = Bundle.main.url(forResource: image, withExtension: nil)!
-		let original = UIImage(contentsOfFile: path)!
-
-		let renderer = UIGraphicsImageRenderer(size: original.size)
-
-		let rounded = renderer.image { ctx in
-			ctx.cgContext.addEllipse(in: CGRect(origin: CGPoint.zero, size: original.size))
-			ctx.cgContext.closePath()
-
-			original.draw(at: CGPoint.zero)
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		guard let image = image else {
+			return
 		}
 
-		imageView.image = rounded
-    }
+		title = image.replacingOccurrences(of: "-Large.jpg", with: "")
+		if let path = Bundle.main.url(forResource: image, withExtension: nil),
+		   let original = UIImage(contentsOfFile: path.path){
+			let renderer = UIGraphicsImageRenderer(size: original.size)
+
+			let rounded = renderer.image { ctx in
+				ctx.cgContext.addEllipse(in: CGRect(origin: CGPoint.zero, size: original.size))
+				ctx.cgContext.closePath()
+
+				original.draw(at: CGPoint.zero)
+			}
+
+			imageView?.image = rounded
+		}
+	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
-		imageView.alpha = 0
+		imageView?.alpha = 0
 
 		UIView.animate(withDuration: 3) { [unowned self] in
-			self.imageView.alpha = 1
+			self.imageView?.alpha = 1
 		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		animTimer.invalidate()
+		animTimer?.invalidate()
 	}
 
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		guard let image = image else {
+			return
+		}
+
 		let defaults = UserDefaults.standard
 		var currentVal = defaults.integer(forKey: image)
 		currentVal += 1
 
-		defaults.set(currentVal, forKey:image)
+		defaults.set(currentVal, forKey: image)
 
 		// tell the parent view controller that it should refresh its table counters when we go back
-		owner.dirty = true
+		owner?.dirty = true
 	}
 }
